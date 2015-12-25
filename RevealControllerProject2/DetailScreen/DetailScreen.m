@@ -8,7 +8,7 @@
 
 #import "DetailScreen.h"
 #import "FrontViewController.h"
-#import "TFHpple.h"
+//#import "TFHpple.h"
 #import "PhimObj.h"
 #import "NetworkManager.h"
 #import "ShowDetailScreen.h"
@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (nonatomic, strong) NSMutableArray *arr_data;
 @property (nonatomic, weak) NSString *desLink ;
-@property (nonatomic,strong) NSString *linkFrontView;
+
 @property (nonatomic,strong) ShowDetailScreen *showDetailScreen;
 @end
 
@@ -28,23 +28,20 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
     
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.linkFrontView == nil) {
-        
-        self.linkFrontView = @"http://mp3.zing.vn/the-loai-album.html";
-    }
     
-    else;
-    
-    [self loadHTML];
+    [self getPlaylist];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.title = NSLocalizedString(self.stringHeader, nil);
+    
+    
     
     
 }
@@ -62,10 +59,11 @@
     
     [self.view addSubview:_image ];
     self.tableView.frame = CGRectMake(10, (self.view.bounds.size.height-20)/3+10, self.view.bounds.size.width-20, (self.view.bounds.size.height-20)*2/3);
+    [self getPlaylist];
     
 }
--(void) loadHTML{
-    [[NetworkManager shareManager] GetMusicFromLink:self.stringLinkDetail
+-(void) getPlaylist{
+    [[NetworkManager shareManager] GetPlaylistFromLink:self.stringLinkDetail
                                          OnComplete:^(NSArray *items) {
                                              self.arr_data = [[NSMutableArray alloc] initWithArray:items];
                                              
@@ -84,7 +82,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+    return self.arr_data.count;
     
 }
 
@@ -96,22 +94,29 @@
                                       reuseIdentifier:@"Cell"];
     }
     
-    
-    cell.textLabel.text = self.stringLinkDetail;
+    PhimObj *obj = self.arr_data[indexPath.row];
+    cell.textLabel.text = obj.tenPhim;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.stringLinkImage]];
-    cell.imageView.image = [UIImage imageWithData:data];
-    //    cell.detailTextLabel.text = self.stringLinkImage;
+    cell.imageView.image = [UIImage imageWithData:data]; // Lấy tạm ảnh của frontview
+    
+    cell.detailTextLabel.text = obj.linkChitiet; //Link của showDetailScreen
     cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-    //    cell.detailTextLabel.font = [UIFont systemFontOfSize:9];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:9];
     return cell ;}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
+}
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!self.showDetailScreen) {
         self.showDetailScreen = [ShowDetailScreen new];
     }
-//    PhimObj *phim = [ PhimObj new];
-//
-//    phim = self.arr_data[indexPath.row];
-    self.showDetailScreen.linkMp3 = @"http://mp3.zing.vn/xml/song-xml/LmJHTkHaplHdFSxyZvcyFGLm";
+    PhimObj *phim = [ PhimObj new];
+
+    phim = self.arr_data[indexPath.row];
+    self.showDetailScreen.linkMp3 = phim.linkChitiet;
     [self.navigationController pushViewController:self.showDetailScreen animated:YES];
 
 }

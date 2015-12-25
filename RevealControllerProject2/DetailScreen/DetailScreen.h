@@ -13,4 +13,5 @@
 @property (nonatomic, strong) NSString *stringLinkDetail;
 @property (nonatomic, strong) NSString *stringHeader;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic,strong) NSString *linkMp3;
 @end

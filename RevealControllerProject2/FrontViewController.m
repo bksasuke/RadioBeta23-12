@@ -49,13 +49,7 @@
                                                                         target:revealController
                                                                         action:@selector(revealToggle:)];
     self.navigationItem.leftBarButtonItem = revealButtonItem;
-    
-   
-    
-
 }
-
-
 - (void) viewDidLayoutSubviews // Layout màn hình theo tỉ lệ 1:2
 {
     [super viewWillLayoutSubviews];
@@ -126,6 +120,9 @@
     
     PhimObj *phimObj = [PhimObj new];
     phimObj = self.arr_data[indexPath.row];
+    
+   // NSLog(@"Push screen to %ld ",(long)indexPath.row);
+    
     
     self.detailScreen.stringLinkDetail = phimObj.linkChitiet;
     

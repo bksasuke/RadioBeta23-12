@@ -10,7 +10,7 @@
 #define BASE_URL @"https://www.mp3.zing.vn"
 #import "TFHpple.h"
 #import "PhimObj.h"
-
+#import "SMXMLDocument.h"
 
 @interface NetworkManager()
 @end
@@ -52,7 +52,6 @@
         
         
         NSString *linkDetail = [element2 objectForKey:@"href"];
-        //TFHppleElement *element3 = element2.children[1];
         
         TFHppleElement *element3 = [element2 firstChildWithTagName:@"img"];
         
@@ -92,7 +91,7 @@
     }
     completedMethod(allItems);
 }
-
+// Lấy thông tin cho FrontView
 
 -(void)GetMusicFromLink:(NSString *)urlmusic OnComplete:(void (^)(NSArray *))completedMethod fail:(void (^)())failMethod
 {
@@ -114,7 +113,7 @@
         
         TFHppleElement *element2 = [element1 firstChildWithTagName:@"img"];
         NSString *linkImage = [element2 objectForKey:@"src"];
-    
+        
         // Xong việc với thẻ tag "a" chứa 2 link trên, ta chuyển sang thẻ khác chứa các thông tin còn lại,
         TFHppleElement *element3 = [element firstChildWithClassName:@"description"];
         TFHppleElement *element4 = [element3 firstChildWithClassName:@"title-item ellipsis"];
@@ -142,12 +141,9 @@
     
 }
 
--(void)GetMp3Link:(NSString *)urlmp3 OnComplete:(void (^)(NSArray *))completedMethod fail:(void (^)())failMethod {
-    
-}
-
+// Lấy playlist cho detailScreen từ linkdetail của FrontView
 -(void)GetPlaylistFromLink:(NSString *)linkParent OnComplete:(void (^)(NSArray *))completedMethod fail:(void (^)())failMethod {
-
+    
     NSError * error;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:linkParent]
                                          options:NSDataReadingUncached
@@ -157,14 +153,82 @@
     
     TFHpple *tutorialPaser = [TFHpple hppleWithHTMLData:data];
     
-    NSString *tutorialQueryString = @"//div[@class='zcontent']/div/div/div/div";
+    NSString *tutorialQueryString = @"//div[@class='box-scroll ']/ul/li/div/h3";
     NSArray *nodes = [tutorialPaser searchWithXPathQuery:tutorialQueryString];
-
-
-
-
+    
+    for (TFHppleElement *element in nodes) {
+        TFHppleElement * element1 = [element firstChildWithTagName:@"a"];
+        
+        NSString *linkDetail = [element1 objectForKey:@"href"];
+        NSString *songname = element1.content;
+        
+        PhimObj *playlist =[[PhimObj alloc] initWithName:songname
+                                                catelogy:nil
+                                                duration:nil
+                                                    date:nil
+                                              linkDetail:linkDetail
+                                                imageUrl:nil];
+        [allItems addObject:playlist];
+    }
+    completedMethod(allItems);
+    
 }
 
+// Lấy link Xml từ trang bài hát đơn (linkDetail)
 
+-(void)GetXmlFromDetailLink:(NSString *)urlmp3 OnComplete:(void (^)(NSArray *))completedMethod fail:(void (^)())failMethod {
+    NSError * error;
+    
+    NSString * html = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlmp3] encoding: NSUTF8StringEncoding error:&error];
+    NSRange indexFirst = [html rangeOfString:@"data-xml="];
+    NSString *pathTemp = @"http://mp3.zing.vn/xml/song-xml/LGJHTZHslQQsLGFtZFcybnkm";
+    long int count = [pathTemp length];
+    NSString *link = [html substringWithRange:NSMakeRange(indexFirst.location + 10, count )]; // Cắt từ toạ độ data-xml + 10 ký tự nữa. Độ dài là số ký tự của pathTemp
+  
+    if (error) { failMethod();}
+    NSMutableArray * allItems = [NSMutableArray new];
+    [allItems addObject:link];
+    completedMethod(allItems);
+}
+-(void)GetMp3FromXml:(NSString *)urlXml OnComplete:(void (^)(NSArray *))completedMethod fail:(void (^)())failMethod {
+    
+    NSError * error;
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlXml]
+                                         options:NSDataReadingUncached
+                                           error:&error];
+    if (error) { failMethod();}
+    NSMutableArray * allItems = [NSMutableArray new];
+    
+    
+    NSData *data1 = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlXml]];
+    
+    
+    SMXMLDocument *document = [SMXMLDocument documentWithData:data1 error:&error];
+    
+    // check for errors
+    if (error) {
+        NSLog(@"Error while parsing the document: %@", error);
+        return;
+    }
+    
+   // NSLog(@"Document:\n %@", document);
+    
+
+    SMXMLElement *items = [document childNamed:@"item"];
+    NSString *source = [items valueWithPath:@"source"];
+    NSString *title = [items valueWithPath:@"title"];
+    
+    PhimObj *song =[[PhimObj alloc] initWithName:source
+                                        catelogy:title
+                                        duration:nil
+                                            date:nil
+                                      linkDetail:nil
+                                        imageUrl:nil];
+
+    
+    
+    [allItems addObject:song];
+    completedMethod (allItems);
+}
 
 @end

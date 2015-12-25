@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface ShowDetailScreen : UIViewController
-@property(nonatomic, strong) UIImage *imgFood;
+
 @property(nonatomic, strong) NSString *stringNameFood;
-@property(nonatomic, strong) NSString *stringPrice;
-@property(nonatomic, strong) NSString *stringSaleOff;
+
 
 @property(nonatomic,strong) NSString *linkMp3;
 

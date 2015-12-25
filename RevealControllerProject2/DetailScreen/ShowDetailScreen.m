@@ -7,28 +7,62 @@
 //
 
 #import "ShowDetailScreen.h"
-
+#import "DetailScreen.h"
+#import "NetworkManager.h"
+#import "PhimObj.h"
+//@import AVFoundation;
 @interface ShowDetailScreen ()
-@property (weak, nonatomic) IBOutlet UIImageView *imageFood;
-@property (weak, nonatomic) IBOutlet UILabel *labelFoodName;
-@property (weak, nonatomic) IBOutlet UILabel *labelPrice;
-@property (weak, nonatomic) IBOutlet UILabel *labelSaleOff;
 
+@property (weak, nonatomic) IBOutlet UILabel *labelFoodName;
+
+@property (nonatomic, strong) PhimObj *song;
+@property (nonatomic, strong) NSMutableArray *arr_data,*arr_data2;
 @end
 
 @implementation ShowDetailScreen
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = self.stringNameFood;
-    self.imageFood.image = self.imgFood;
-    self.labelFoodName.text = self.linkMp3;
-    self.labelPrice.text = self.stringPrice;
-    self.labelSaleOff.text = self.stringSaleOff;
-    //NSLog(@"%@",self.linkMp3);
+    PhimObj *song = self.arr_data2[0];
+    self.title = song.theLoai;
+ 
+//    self.labelPrice.text = self.stringPrice;
+//    self.labelSaleOff.text = self.stringSaleOff;
     [self.view addSubview:self.labelFoodName];
+    [self.view reloadInputViews];
+    [self getXml];
+    [self getMp3];
+    [self addItem2Screen];
+    
+    
+    
 }
 
 
+-(void) getXml{
+    [[NetworkManager shareManager] GetXmlFromDetailLink:self.linkMp3
+                                            OnComplete:^(NSArray *items) {
+                                                self.arr_data = [[NSMutableArray alloc] initWithArray:items];
+                                                
+                                            } fail:^{
+                                                NSLog(@"loi");
+                                            }];
+    
+}
+-(void) getMp3 {
+    [[NetworkManager shareManager] GetMp3FromXml:self.arr_data[0]
+                                             OnComplete:^(NSArray *items) {
+                                                 self.arr_data2 = [[NSMutableArray alloc] initWithArray:items];
+                                                 
+                                             } fail:^{
+                                                 NSLog(@"loi");
+                                             }];
+    
+}
+
+-(void) addItem2Screen {
+    
+    NSLog(@"%@",self.song.tenPhim);
+}
 
 @end
