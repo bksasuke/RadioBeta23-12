@@ -126,7 +126,7 @@
 		5E605BB714A081F900853025 /* Project-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project-Prefix.pch"; sourceTree = "<group>"; };
 		5E605BB814A081F900853025 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9301FEEF1C2932F2002EA38C /* DetailScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailScreen.h; sourceTree = "<group>"; };
-		9301FEF01C2932F2002EA38C /* DetailScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailScreen.m; sourceTree = "<group>"; };
+		9301FEF01C2932F2002EA38C /* DetailScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailScreen.m; path = DetailScreen/DetailScreen.m; sourceTree = "<group>"; };
 		9301FEF11C2932F2002EA38C /* DetailScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailScreen.xib; sourceTree = "<group>"; };
 		930F21A41C216B920089A8CC /* DataItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataItems.h; path = ../../DataItems.h; sourceTree = "<group>"; };
 		930F21A51C216B920089A8CC /* DataItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataItems.m; path = ../../DataItems.m; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 		934778A81C2AA91200600AE6 /* SMXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMXMLDocument.h; sourceTree = "<group>"; };
 		934778A91C2AA91200600AE6 /* SMXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMXMLDocument.m; sourceTree = "<group>"; };
 		934778AB1C2AAD8500600AE6 /* ShowDetailScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowDetailScreen.h; sourceTree = "<group>"; };
-		934778AC1C2AAD8500600AE6 /* ShowDetailScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowDetailScreen.m; sourceTree = "<group>"; };
+		934778AC1C2AAD8500600AE6 /* ShowDetailScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowDetailScreen.m; path = DetailScreen/ShowDetailScreen.m; sourceTree = "<group>"; };
 		934778AD1C2AAD8500600AE6 /* ShowDetailScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowDetailScreen.xib; sourceTree = "<group>"; };
 		937776B61C22BDF1009E3E04 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = ../TFHpple.h; sourceTree = "<group>"; };
 		937776B71C22BDF1009E3E04 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = ../TFHpple.m; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 		937776BF1C22BE10009E3E04 /* PhimObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhimObj.h; sourceTree = "<group>"; };
 		937776C01C22BE10009E3E04 /* PhimObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhimObj.m; sourceTree = "<group>"; };
 		937776C31C22BE3F009E3E04 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
-		937776C41C22BE3F009E3E04 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		937776C41C22BE3F009E3E04 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetworkManager.m; path = DetailScreen/Image/ImportedFiles/NetworkManager.m; sourceTree = "<group>"; };
 		937776C61C22BF1C009E3E04 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		93AC6FB41C22A14400269ABF /* quickandsnow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = quickandsnow.jpg; sourceTree = "<group>"; };
 		93AC6FB51C22A14400269ABF /* vov1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vov1.jpg; sourceTree = "<group>"; };
@@ -256,6 +256,9 @@
 		5E5A2CF314E0CB760042AE1E /* FrontViewController (Front) */ = {
 			isa = PBXGroup;
 			children = (
+				937776C41C22BE3F009E3E04 /* NetworkManager.m */,
+				934778AC1C2AAD8500600AE6 /* ShowDetailScreen.m */,
+				9301FEF01C2932F2002EA38C /* DetailScreen.m */,
 				9343F8581C226D0900A5B283 /* FrontViewController.h */,
 				9343F8591C226D0900A5B283 /* FrontViewController.m */,
 				9343F85A1C226D0900A5B283 /* FrontViewController.xib */,
@@ -356,7 +359,6 @@
 				937776BF1C22BE10009E3E04 /* PhimObj.h */,
 				937776C01C22BE10009E3E04 /* PhimObj.m */,
 				937776C31C22BE3F009E3E04 /* NetworkManager.h */,
-				937776C41C22BE3F009E3E04 /* NetworkManager.m */,
 			);
 			name = NetWorkManager;
 			path = DetailScreen/Image/ImportedFiles;
@@ -403,10 +405,8 @@
 				93FF7C411C215E4100E3B36D /* DataItem.h */,
 				93FF7C421C215E4100E3B36D /* DataItem.m */,
 				9301FEEF1C2932F2002EA38C /* DetailScreen.h */,
-				9301FEF01C2932F2002EA38C /* DetailScreen.m */,
 				9301FEF11C2932F2002EA38C /* DetailScreen.xib */,
 				934778AB1C2AAD8500600AE6 /* ShowDetailScreen.h */,
-				934778AC1C2AAD8500600AE6 /* ShowDetailScreen.m */,
 				934778AD1C2AAD8500600AE6 /* ShowDetailScreen.xib */,
 				93FF7C471C215E7700E3B36D /* CustomCell.h */,
 				93FF7C481C215E7700E3B36D /* CustomCell.m */,
