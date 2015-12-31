@@ -90,7 +90,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+     NSLog(@"%lu",(unsigned long)self.arr_data.count);
+    
     return self.arr_data.count;
+   
 
 }
 

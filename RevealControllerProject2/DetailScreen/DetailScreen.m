@@ -111,8 +111,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (!self.showDetailScreen) {
-        self.showDetailScreen = [ShowDetailScreen new];
-    }
+        self.showDetailScreen = [ShowDetailScreen new]; }
+   
     PhimObj *phim = [ PhimObj new];
 
     phim = self.arr_data[indexPath.row];

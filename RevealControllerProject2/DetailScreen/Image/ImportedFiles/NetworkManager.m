@@ -181,7 +181,7 @@
     
     NSString * html = [NSString stringWithContentsOfURL:[NSURL URLWithString:urlmp3] encoding: NSUTF8StringEncoding error:&error];
     NSRange indexFirst = [html rangeOfString:@"data-xml="];
-    NSString *pathTemp = @"http://mp3.zing.vn/xml/song-xml/LGJHTZHslQQsLGFtZFcybnkm";
+    NSString *pathTemp = @"http://mp3.zing.vn/xml/song-xml/LGJHTZHslQQsLGFtZFcybnkm";  // template link, để đo độ dài chuỗi cần cắt.
     long int count = [pathTemp length];
     NSString *link = [html substringWithRange:NSMakeRange(indexFirst.location + 10, count )]; // Cắt từ toạ độ data-xml + 10 ký tự nữa. Độ dài là số ký tự của pathTemp
   
@@ -194,25 +194,23 @@
     
     NSError * error;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlXml]
-                                         options:NSDataReadingUncached
-                                           error:&error];
+                                          options:NSDataReadingUncached
+                                            error:&error];
+    
+    
     if (error) { failMethod();}
     NSMutableArray * allItems = [NSMutableArray new];
     
     
-    NSData *data1 = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlXml]];
     
     
-    SMXMLDocument *document = [SMXMLDocument documentWithData:data1 error:&error];
+    SMXMLDocument *document = [SMXMLDocument documentWithData:data error:&error];
     
     // check for errors
     if (error) {
         NSLog(@"Error while parsing the document: %@", error);
         return;
     }
-    
-   // NSLog(@"Document:\n %@", document);
-    
 
     SMXMLElement *items = [document childNamed:@"item"];
     NSString *source = [items valueWithPath:@"source"];
